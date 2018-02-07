@@ -4,6 +4,7 @@ COMMANDS to update the git repostory
 git add .
 git commit -m "message here"
 git push origin master
+git push -f origin master
 ```
 
 COMMANDS to clone it
