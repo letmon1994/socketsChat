@@ -29,10 +29,9 @@
             margin-right: .5%;
         }
 
-        #images {
+        #col {
             border: 0;
-            padding: 10px;
-            width: 10%;
+            width: 5%;
             margin-right: .5%;
         }
 
@@ -75,17 +74,30 @@
         $('form').submit(function() {
             socket.emit('chat message', {
                 username: $('#username').val(),
-                msg: $('#m').val()
+                msg: $('#m').val(),
+                col: $('#col').val()
             });
+            //console.log($('#col').val())
 
-            $('#messages').append($('<li>').html('<b> ' +
-                $('#username').val() + '</b> says: ' + $('#m').val()));
+            // style="color:blue;"
+            $('#messages').append($('<li>').html(
+                "<b>" +
+                $('#username').val() +
+                "</b> says: <font color='" +
+                $('#col').val() +
+                "'>" +
+                $('#m').val() + "</font>"));
             $('#m').val('');
             return false;
         });
         socket.on('chat message', function(content) {
-            $('#messages').append($('<li>').html('<b> ' +
-                content.username + '</b> says: ' + content.msg));
+            $('#messages').append($('<li>').html(
+                "<b>" +
+                content.username +
+                "</b> says: <font color='" +
+                content.col +
+                "'>" +
+                content.msg + "</font>"));
         });
         socket.on('conn', function() {
             $('#messages').append($('<li>').text("A user connected"));
@@ -103,7 +115,8 @@
     <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" />
-        <input id="images" placeholder="Enter Username" autocomplete="off" />
+        <!--        <input id="col" placeholder="Enter Username" autocomplete="off" />-->
+        <input type="color" id="col" name="favcolor" value="#ff0000">
         <input id="username" placeholder="Enter Username" autocomplete="off" />
         <button>Send</button>
     </form>
