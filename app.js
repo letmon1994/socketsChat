@@ -11,12 +11,14 @@ io.emit('some event', {
 });
 
 io.on('connection', function (socket) {
+    console.log('a user connected');
     io.emit('conn');
     socket.on('disconnect', function () {
+        console.log('a user discconected');
         io.emit('disc');
     });
     socket.on('chat message', function (msg) {
-        io.emit('chat message', msg);
+        socket.broadcast.emit('chat message', msg);
     });
 
 });
